@@ -1,3 +1,37 @@
+# ⛅ Weather App
+
+A responsive weather dashboard built with React that shows real-time weather, 
+a 5-day forecast, time-of-day slider, animated icons, and dynamic city photo backgrounds.
+
+## 🔗 Live Demo
+[View on Vercel](your-vercel-link-here)
+
+## 🛠️ Built With
+- React
+- OpenWeatherMap API
+- Unsplash API
+- Framer Motion
+- Vercel
+
+## ✨ Features
+- Search any city for live weather data
+- Animated weather icons that match conditions
+- Dynamic city photo backgrounds via Unsplash
+- Time-of-day slider with smooth transitions
+- 5-day forecast
+- Dark / light mode toggle
+
+## 🚀 Run Locally
+1. Clone the repo
+2. Run `npm install`
+3. Add a `.env` file with your API keys:
+REACT_APP_WEATHER_KEY=your_key
+REACT_APP_UNSPLASH_KEY=your_key
+4. Run `npm start`
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
