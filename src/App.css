@@ -1,38 +1,94 @@
-.App {
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: 'Segoe UI', sans-serif; transition: background 0.3s; }
+
+.app.light { background: #e8f4fd; color: #333; min-height: 100vh; }
+.app.dark  { background: #1a1a2e; color: #eee; min-height: 100vh; }
+
+.container { max-width: 600px; margin: 0 auto; padding: 2rem 1rem; }
+
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.header h1 { font-size: 1.8rem; }
+
+.toggle-btn { padding: 0.4rem 1rem; border: none; border-radius: 20px; cursor: pointer; font-size: 0.9rem; background: #4a90d9; color: white; }
+
+.search-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.search-bar input { flex: 1; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+.search-bar button { padding: 0.75rem 1.5rem; background: #4a90d9; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+
+.weather-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
+.weather-card h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+.temp { font-size: 3rem; font-weight: bold; }
+.desc { text-transform: capitalize; margin-bottom: 1rem; opacity: 0.8; }
+.details { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 0.5rem; font-size: 0.9rem; }
+
+.forecast h3 { margin-bottom: 1rem; }
+.forecast-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+.forecast-card { background: rgba(255,255,255,0.15); border-radius: 12px; padding: 0.75rem 0.5rem; text-align: center; font-size: 0.85rem; }
+
+.status { text-align: center; opacity: 0.7; }
+.error { color: #e74c3c; text-align: center; }
+
+/* Animated backgrounds based on condition */
+.bg-clear   { background: linear-gradient(135deg, #f7971e, #ffd200); }
+.bg-clouds  { background: linear-gradient(135deg, #757f9a, #d7dde8); }
+.bg-rain    { background: linear-gradient(135deg, #373b44, #4286f4); }
+.bg-snow    { background: linear-gradient(135deg, #e0eafc, #cfdef3); }
+.bg-thunder { background: linear-gradient(135deg, #0f0c29, #302b63); }
+.bg-night   { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+
+.app { transition: background 1s ease; }
+
+/* Icon sizing */
+.icon-large { font-size: 5rem; margin: 0.5rem 0; }
+.icon-sun   { display: inline-block; font-size: 5rem; }
+
+/* Time Slider */
+.time-slider { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center; }
+.time-slider h3 { margin-bottom: 1rem; }
+
+.slider-labels { display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.7; margin-bottom: 0.5rem; }
+.active-label { font-weight: bold; opacity: 1; color: #4a90d9; }
+
+.slider { width: 100%; accent-color: #4a90d9; margin-bottom: 1rem; cursor: pointer; }
+
+.slider-card { padding: 1rem; }
+.slider-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+.slider-temp { font-size: 2rem; font-weight: bold; }
+.slider-desc { text-transform: capitalize; opacity: 0.8; margin-bottom: 0.75rem; }
+.slider-details { display: flex; justify-content: space-around; font-size: 0.85rem; flex-wrap: wrap; gap: 0.5rem; }
+
+/* City photo background overlay */
+.app {
+  position: relative;
+}
+
+.app::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: inherit;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.45);
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Photo credit */
+.photo-credit {
   text-align: center;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.photo-credit a {
+  color: inherit;
+  text-decoration: underline;
 }

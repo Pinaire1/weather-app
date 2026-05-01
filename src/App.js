@@ -1,25 +1,104 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import axios from "axios";
+import SearchBar from "./components/SearchBar";
+import WeatherCard from "./components/WeatherCard";
+import TimeSlider from "./components/TimeSlider";
+import Forecast from "./components/Forecast";
+import ToggleButton from "./components/ToggleButton";
+import "./App.css";
+import useCityPhoto from "./hooks/useCityPhoto";
+
+const API_KEY = process.env.REACT_APP_WEATHER_KEY;
+const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { photoUrl, photographer } = useCityPhoto(weather?.name);
+
+  const fetchWeather = async (cityName) => {
+    setLoading(true);
+    setError("");
+    try {
+      const [currentRes, forecastRes] = await Promise.all([
+        axios.get(
+          `${BASE_URL}/weather?q=${cityName}&appid=${API_KEY}&units=imperial`,
+        ),
+        axios.get(
+          `${BASE_URL}/forecast?q=${cityName}&appid=${API_KEY}&units=imperial`,
+        ),
+      ]);
+      setWeather(currentRes.data);
+      setForecast(forecastRes.data);
+    } catch (err) {
+      setError("City not found. Please try again.");
+      setWeather(null);
+      setForecast(null);
+    }
+    setLoading(false);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (city.trim()) fetchWeather(city.trim());
+  };
+  
+    const getBackgroundClass = () => {
+      if (!weather) return "";
+      const condition = weather.weather[0].description.toLowerCase();
+      if (condition.includes("clear")) return "bg-clear";
+      if (condition.includes("cloud")) return "bg-clouds";
+      if (condition.includes("rain") || condition.includes("drizzle"))
+        return "bg-rain";
+      if (condition.includes("snow")) return "bg-snow";
+      if (condition.includes("thunder")) return "bg-thunder";
+      const hour = new Date().getHours();
+      if (hour < 6 || hour > 20) return "bg-night";
+      return "bg-clear";
+    };
+
+    return (
+      <div
+        className={`app ${darkMode ? "dark" : "light"} ${getBackgroundClass()}`}
+        style={{
+          backgroundImage: photoUrl ? `url(${photoUrl})` : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          transition: "background-image 1s ease",
+        }}
+      >
+        <div className="container">
+          <div className="header">
+            <h1>⛅ Weather App</h1>
+            <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
+            {photographer && (
+              <p className="photo-credit">
+                📷 Photo by{" "}
+                <a href={photographer.link} target="_blank" rel="noreferrer">
+                  {photographer.name}
+                </a>{" "}
+                on Unsplash
+              </p>
+            )}
+          </div>
+          <SearchBar
+            city={city}
+            setCity={setCity}
+            handleSearch={handleSearch}
+          />
+          {loading && <p className="status">Fetching weather...</p>}
+          {error && <p className="error">{error}</p>}
+          {weather && <WeatherCard weather={weather} />}
+          {forecast && <TimeSlider forecast={forecast} />}
+          {forecast && <Forecast forecast={forecast} />}
+        </div>
+      </div>
+    );
+  }
 
 export default App;
