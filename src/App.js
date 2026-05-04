@@ -7,6 +7,7 @@ import TimeSlider from "./components/TimeSlider";
 import Forecast from "./components/Forecast";
 import ToggleButton from "./components/ToggleButton";
 import LandingSlideshow from "./components/LandingSlideshow";
+// eslint-disable-next-line
 import LocalPlaces from "./components/LocalPlaces";
 
 import useCityPhoto from "./hooks/useCityPhoto";

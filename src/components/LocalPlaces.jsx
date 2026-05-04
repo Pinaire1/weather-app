@@ -19,14 +19,16 @@ function LocalPlaces({ weather }) {
     const fetchPlaces = async () => {
       setLoading(true);
       try {
-        const headers = { Authorization: FSQ_KEY };
+        const headers = { Authorization: FSQ_KEY,
+          Accept: "application/json"
+         };
 
         const [coffeeRes, bjjRes] = await Promise.all([
           axios.get("https://api.foursquare.com/v3/places/search", {
             headers,
             params: {
               ll,
-              query: "coffee cafe",
+              query: "coffee",
               limit: 5,
               sort: "DISTANCE",
             },
@@ -35,7 +37,7 @@ function LocalPlaces({ weather }) {
             headers,
             params: {
               ll,
-              query: "jiu jitsu bjj martial arts",
+              query: "jiu jitsu gym",
               limit: 5,
               sort: "DISTANCE",
             },
