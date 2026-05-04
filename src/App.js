@@ -7,11 +7,12 @@ import Forecast from "./components/Forecast";
 import ToggleButton from "./components/ToggleButton";
 import "./App.css";
 import useCityPhoto from "./hooks/useCityPhoto";
+import LandingSlideshow from "./components/LandingSlideshow";
 
 const API_KEY = process.env.REACT_APP_WEATHER_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
-function App() {
+function App() {}
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
@@ -62,43 +63,42 @@ function App() {
     };
 
     return (
-      <div
-        className={`app ${darkMode ? "dark" : "light"} ${getBackgroundClass()}`}
-        style={{
-          backgroundImage: photoUrl ? `url(${photoUrl})` : undefined,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          transition: "background-image 1s ease",
-        }}
-      >
-        <div className="container">
-          <div className="header">
-            <h1>⛅ Weather App</h1>
-            <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
-            {photographer && (
-              <p className="photo-credit">
-                📷 Photo by{" "}
-                <a href={photographer.link} target="_blank" rel="noreferrer">
-                  {photographer.name}
-                </a>{" "}
-                on Unsplash
-              </p>
-            )}
-          </div>
-          <SearchBar
-            city={city}
-            setCity={setCity}
-            handleSearch={handleSearch}
-          />
-          {loading && <p className="status">Fetching weather...</p>}
-          {error && <p className="error">{error}</p>}
-          {weather && <WeatherCard weather={weather} />}
-          {forecast && <TimeSlider forecast={forecast} />}
-          {forecast && <Forecast forecast={forecast} />}
-        </div>
-      </div>
-    );
-  }
+  <div
+    className={`app ${darkMode ? "dark" : "light"}`}
+    style={{
+      backgroundImage: weather && photoUrl ? `url(${photoUrl})` : undefined,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      transition: "background-image 1s ease",
+    }}
+  >
+    {/* Show slideshow only on landing */}
+    {!weather && <LandingSlideshow />}
 
-export default App;
+    {/* Dark overlay when city is loaded */}
+    {weather && <div className="app-overlay" />}
+
+    <div className="container">
+      <div className="header">
+        <h1>⛅ Weather App</h1>
+        <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
+      </div>
+      <SearchBar city={city} setCity={setCity} handleSearch={handleSearch} />
+      {loading && <p className="status">Fetching weather...</p>}
+      {error && <p className="error">{error}</p>}
+      {weather && <WeatherCard weather={weather} />}
+      {forecast && <TimeSlider forecast={forecast} />}
+      {forecast && <Forecast forecast={forecast} />}
+      {photographer && (
+        <p className="photo-credit">
+          📷 Photo by{" "}
+          <a href={photographer.link} target="_blank" rel="noreferrer">
+            {photographer.name}
+          </a>{" "}
+          on Unsplash
+        </p>
+      )}
+    </div>
+  </div>
+);

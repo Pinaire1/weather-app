@@ -92,3 +92,104 @@ body { font-family: 'Segoe UI', sans-serif; transition: background 0.3s; }
   color: inherit;
   text-decoration: underline;
 }
+
+/* Slideshow wrapper */
+.slideshow-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Ken Burns background */
+.slideshow-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* Dark overlay */
+.slideshow-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* City name label */
+.slideshow-city-label {
+  position: absolute;
+  bottom: 6rem;
+  left: 2rem;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  z-index: 2;
+  letter-spacing: 2px;
+}
+
+/* Coffee corner */
+.coffee-corner {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  text-align: right;
+}
+
+.coffee-corner img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.coffee-credit {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.25rem;
+}
+
+.coffee-credit a { color: inherit; text-decoration: underline; }
+
+/* City photo credit on slideshow */
+.slideshow-credit {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 2rem;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  z-index: 2;
+}
+
+.slideshow-credit a { color: inherit; text-decoration: underline; }
+
+/* Overlay when city weather is showing */
+.app-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 0;
+}
+
+/* Make sure container sits above overlays */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.slideshow-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  background: #1a1a2e;
+}

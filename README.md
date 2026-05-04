@@ -4,7 +4,7 @@ A responsive weather dashboard built with React that shows real-time weather,
 a 5-day forecast, time-of-day slider, animated icons, and dynamic city photo backgrounds.
 
 ## 🔗 Live Demo
-[View on Vercel](your-vercel-link-here)
+[View on Vercel](https://vercel.com/pinaire1s-projects/weather-app/H8VWPMQd2zHBia7cgQ8DYj1Hp1rS)
 
 ## 🛠️ Built With
 - React
