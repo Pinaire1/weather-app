@@ -23,6 +23,12 @@ function LocalPlaces({ weather }) {
           axios.get(`/api/places?ll=${ll}&query=jiu jitsu bjj martial arts`),
         ]);
 
+        // ADD THESE TEMPORARILY
+console.log("Coffee response:", coffeeRes.data);
+console.log("BJJ response:", bjjRes.data);
+console.log("Coordinates:", ll);
+console.log("Weather object:", weather);
+
         setCoffeeShops(coffeeRes.data.results || []);
         setBjjSchools(bjjRes.data.results || []);
       } catch (err) {
