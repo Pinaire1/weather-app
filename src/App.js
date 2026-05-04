@@ -7,6 +7,7 @@ import TimeSlider from "./components/TimeSlider";
 import Forecast from "./components/Forecast";
 import ToggleButton from "./components/ToggleButton";
 import LandingSlideshow from "./components/LandingSlideshow";
+import LocalPlaces from "./components/LocalPlaces";
 
 import useCityPhoto from "./hooks/useCityPhoto";
 import "./App.css";
@@ -87,58 +88,66 @@ function App() {
   // Render
   // ---------------------------
   return (
-    <div
-      className={`app ${darkMode ? "dark" : "light"} ${getBackgroundClass()}`}
-      style={{
-        backgroundImage: weather && photoUrl ? `url(${photoUrl})` : undefined,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        transition: "background-image 1s ease",
-      }}
-    >
-      {/* Landing slideshow */}
-      {!weather && <LandingSlideshow />}
+  <div
+    className={`app ${darkMode ? "dark" : "light"} ${getBackgroundClass()}`}
+    style={{
+      backgroundImage: weather && photoUrl ? `url(${photoUrl})` : undefined,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      transition: "background-image 1s ease",
+    }}
+  >
+    {/* Landing slideshow */}
+    {!weather && <LandingSlideshow />}
 
-      {/* Overlay when weather is loaded */}
-      {weather && <div className="app-overlay" />}
+    {/* Overlay when weather is loaded */}
+    {weather && <div className="app-overlay" />}
 
-      <div className="container">
-        <div className="header">
-          <h1>⛅ Weather App</h1>
+    <div className="container">
 
-          <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
+      {/* HEADER INSIDE CONTAINER (THIS FIXES EVERYTHING) */}
+      <div className="header">
+        <div className="brand">
+          <h1 className="brand-title">
+            Jits <span>&</span> Jitterz
+          </h1>
+          <p className="brand-sub">Weather · Coffee · BJJ</p>
         </div>
 
-        <SearchBar
-          city={city}
-          setCity={setCity}
-          handleSearch={handleSearch}
-        />
-
-        {loading && <p className="status">Fetching weather...</p>}
-        {error && <p className="error">{error}</p>}
-
-        {weather && <WeatherCard weather={weather} />}
-        {forecast && <TimeSlider forecast={forecast} />}
-        {forecast && <Forecast forecast={forecast} />}
-
-        {photographer && (
-          <p className="photo-credit">
-            📷 Photo by{" "}
-            <a
-              href={photographer.link}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {photographer.name}
-            </a>{" "}
-            on Unsplash
-          </p>
-        )}
+        <ToggleButton darkMode={darkMode} setDarkMode={setDarkMode} />
       </div>
+
+      {/* SEARCH */}
+      <SearchBar
+        city={city}
+        setCity={setCity}
+        handleSearch={handleSearch}
+      />
+
+      {/* STATES */}
+      {loading && <p className="status">Fetching weather...</p>}
+      {error && <p className="error">{error}</p>}
+
+      {/* DATA */}
+      {weather && <WeatherCard weather={weather} />}
+      {forecast && <TimeSlider forecast={forecast} />}
+      {forecast && <Forecast forecast={forecast} />}
+
+      {/* PHOTO CREDIT */}
+      {photographer && (
+        <p className="photo-credit">
+          📷 Photo by{" "}
+          <a href={photographer.link} target="_blank" rel="noreferrer">
+            {photographer.name}
+          </a>{" "}
+          on Unsplash
+        </p>
+      )}
+
     </div>
-  );
+  </div>
+);
 }
 
 export default App;
