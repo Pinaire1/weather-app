@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import PlaceCard from "./PlaceCard";
 
-const FSQ_KEY = process.env.REACT_APP_FOURSQUARE_KEY;
-
 function LocalPlaces({ weather }) {
   const [coffeeShops, setCoffeeShops] = useState([]);
   const [bjjSchools, setBjjSchools] = useState([]);
@@ -18,45 +16,32 @@ function LocalPlaces({ weather }) {
 
     const fetchPlaces = async () => {
       setLoading(true);
-      try {
-        const headers = { Authorization: FSQ_KEY,
-          Accept: "application/json"
-         };
 
+      try {
         const [coffeeRes, bjjRes] = await Promise.all([
-          axios.get("https://api.foursquare.com/v3/places/search", {
-            headers,
-            params: {
-              ll,
-              query: "coffee",
-              limit: 5,
-              sort: "DISTANCE",
-            },
-          }),
-          axios.get("https://api.foursquare.com/v3/places/search", {
-            headers,
-            params: {
-              ll,
-              query: "jiu jitsu gym",
-              limit: 5,
-              sort: "DISTANCE",
-            },
-          }),
+          axios.get(`/api/places?ll=${ll}&query=coffee cafe`),
+          axios.get(`/api/places?ll=${ll}&query=jiu jitsu bjj martial arts`),
         ]);
 
-        setCoffeeShops(coffeeRes.data.results);
-        setBjjSchools(bjjRes.data.results);
+        setCoffeeShops(coffeeRes.data.results || []);
+        setBjjSchools(bjjRes.data.results || []);
       } catch (err) {
         console.error("Foursquare fetch failed:", err);
+        setCoffeeShops([]);
+        setBjjSchools([]);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchPlaces();
   }, [weather]);
 
   if (!weather) return null;
-  if (loading) return <p className="status">Finding local spots...</p>;
+
+  if (loading) {
+    return <p className="status">Finding local spots...</p>;
+  }
 
   return (
     <motion.div
@@ -65,10 +50,10 @@ function LocalPlaces({ weather }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Coffee Column */}
       <div className="places-column">
         <h3 className="places-heading">☕ Local Coffee</h3>
-        {coffeeShops.length ? (
+
+        {coffeeShops.length > 0 ? (
           coffeeShops.map((place) => (
             <PlaceCard key={place.fsq_id} place={place} type="coffee" />
           ))
@@ -77,10 +62,10 @@ function LocalPlaces({ weather }) {
         )}
       </div>
 
-      {/* BJJ Column */}
       <div className="places-column">
         <h3 className="places-heading">🥋 Local BJJ Schools</h3>
-        {bjjSchools.length ? (
+
+        {bjjSchools.length > 0 ? (
           bjjSchools.map((place) => (
             <PlaceCard key={place.fsq_id} place={place} type="bjj" />
           ))
