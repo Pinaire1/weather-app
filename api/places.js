@@ -6,7 +6,7 @@ export default async function handler(req, res) {
       `https://api.foursquare.com/v3/places/search?ll=${ll}&query=${encodeURIComponent(query)}&limit=5&sort=DISTANCE`,
       {
         headers: {
-          Authorization: process.env.REACT_APP_FOURSQUARE_KEY,
+          Authorization: process.env.FOURSQUARE_KEY,
           Accept: "application/json",
         },
       }
