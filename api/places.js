@@ -6,11 +6,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://api.foursquare.com/v3/places/search?ll=${ll}&query=${encodeURIComponent(query)}&limit=5&sort=DISTANCE`;
+    const url = `https://api.foursquare.com/v3/places/search?ll=${ll}&query=${encodeURIComponent(query)}&limit=10&sort=DISTANCE`;
 
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${process.env.FOURSQUARE_KEY}`,   // ← Add "Bearer "
+        Authorization: `Bearer ${process.env.FOURSQUARE_KEY}`,
         Accept: "application/json",
       },
     });
@@ -18,10 +18,11 @@ export default async function handler(req, res) {
     if (!response.ok) {
       const text = await response.text();
       console.error("Foursquare error:", response.status, text);
-
+      
       return res.status(response.status).json({
         error: "Foursquare API failed",
-        details: text,
+        status: response.status,
+        details: text
       });
     }
 
