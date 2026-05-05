@@ -19,8 +19,8 @@ function LocalPlaces({ weather }) {
 
       try {
         const [coffeeRes, bjjRes] = await Promise.all([
-          axios.get(`/api/places?ll=${ll}&query=coffee cafe`),
-          axios.get(`/api/places?ll=${ll}&query=jiu jitsu bjj martial arts`),
+          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=${encodeURIComponent("coffee cafe")}`),
+          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=${encodeURIComponent("bjj brazilian jiu jitsu")}`),
         ]);
 
 

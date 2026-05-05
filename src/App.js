@@ -134,6 +134,7 @@ function App() {
       {weather && <WeatherCard weather={weather} />}
       {forecast && <TimeSlider forecast={forecast} />}
       {forecast && <Forecast forecast={forecast} />}
+      {weather && <LocalPlaces weather={weather} />}
 
       {/* PHOTO CREDIT */}
       {photographer && (
