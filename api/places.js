@@ -6,13 +6,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `https://api.foursquare.com/v3/places/search?ll=${ll}&query=${encodeURIComponent(
-      query
-    )}&limit=5&sort=DISTANCE`;
+    const url = `https://api.foursquare.com/v3/places/search?ll=${ll}&query=${encodeURIComponent(query)}&limit=5&sort=DISTANCE`;
 
     const response = await fetch(url, {
       headers: {
-        Authorization: process.env.FOURSQUARE_KEY,
+        Authorization: `Bearer ${process.env.FOURSQUARE_KEY}`,   // ← Add "Bearer "
         Accept: "application/json",
       },
     });
@@ -34,9 +32,6 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("Serverless error:", err);
-
-    return res.status(500).json({
-      error: "Failed to fetch places",
-    });
+    return res.status(500).json({ error: "Failed to fetch places" });
   }
 }
