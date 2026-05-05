@@ -8,6 +8,22 @@ function LocalPlaces({ weather }) {
   const [bjjSchools, setBjjSchools] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Normalize Google Place to a format PlaceCard can easily use
+  const normalizePlace = (place) => {
+    return {
+      fsq_id: place.id || Math.random().toString(36).substr(2, 9), // fallback key
+      name: place.displayName?.text || "Unknown Place",
+      formattedAddress: place.formattedAddress || "",
+      location: {
+        lat: place.location?.latitude,
+        lng: place.location?.longitude,
+      },
+      rating: place.rating || null,
+      userRatingCount: place.userRatingCount || 0,
+      // Add more fields if your PlaceCard uses them
+    };
+  };
+
   useEffect(() => {
     if (!weather) return;
 
@@ -19,15 +35,17 @@ function LocalPlaces({ weather }) {
 
       try {
         const [coffeeRes, bjjRes] = await Promise.all([
-          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=${encodeURIComponent("coffee cafe")}`),
-          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=${encodeURIComponent("bjj brazilian jiu jitsu")}`),
+          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=coffee`),
+          axios.get(`/api/places?ll=${encodeURIComponent(ll)}&query=bjj OR "brazilian jiu jitsu" OR "jiu jitsu"`),
         ]);
 
+        const normalizedCoffee = (coffeeRes.data.results || []).map(normalizePlace);
+        const normalizedBjj = (bjjRes.data.results || []).map(normalizePlace);
 
-        setCoffeeShops(coffeeRes.data.results || []);
-        setBjjSchools(bjjRes.data.results || []);
+        setCoffeeShops(normalizedCoffee);
+        setBjjSchools(normalizedBjj);
       } catch (err) {
-        console.error("Foursquare fetch failed:", err);
+        console.error("Places fetch failed:", err);
         setCoffeeShops([]);
         setBjjSchools([]);
       } finally {
