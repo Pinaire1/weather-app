@@ -384,3 +384,120 @@ body { font-family: 'Segoe UI', sans-serif; transition: background 0.3s; }
     justify-content: center;
   }
 }
+
+/* Coffee near BJJ section */
+.pairing-section {
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  margin-bottom: 1.25rem;
+}
+
+.places-main-heading {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.section-subheading {
+  font-size: 0.78rem;
+  opacity: 0.55;
+  letter-spacing: 1px;
+}
+
+/* Individual pairing block */
+.pairing-block {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pairing-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 0.4rem;
+}
+
+/* Distance bridge */
+.pairing-bridge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bridge-line {
+  width: 2px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.bridge-badge {
+  background: #4a90d9;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Standalone columns below */
+.local-places-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.places-column {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.places-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pairing-block {
+    grid-template-columns: 1fr;
+  }
+
+  .pairing-bridge {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .bridge-line {
+    width: 20px;
+    height: 2px;
+  }
+
+  .local-places-columns {
+    grid-template-columns: 1fr;
+  }
+}
