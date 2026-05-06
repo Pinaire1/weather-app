@@ -114,8 +114,6 @@ function LocalPlaces({ weather }) {
 
   const pairs = pairCoffeeWithBjj(bjjSchools, coffeeShops);
 
-  const pairs = pairCoffeeWithBjj(bjjSchools, coffeeShops);
-
 return (
   <motion.div
     className="local-places-wrapper"
