@@ -114,86 +114,76 @@ function LocalPlaces({ weather }) {
 
   const pairs = pairCoffeeWithBjj(bjjSchools, coffeeShops);
 
-return (
-  <motion.div
-    className="local-places-wrapper"
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-  >
+  return (
+    <motion.div
+      className="local-places-wrapper"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="pairing-section">
+        <div className="section-header">
+          <h3 className="places-main-heading">☕ Coffee Near BJJ</h3>
+          <p className="section-subheading">
+            The closest coffee shop to each gym near you
+          </p>
+        </div>
 
-    {/* ☕ + 🥋 Pairing Section */}
-    <div className="pairing-section">
-      <div className="section-header">
-        <h3 className="places-main-heading">☕ Coffee Near BJJ</h3>
-        <p className="section-subheading">
-          The closest coffee shop to each gym near you
-        </p>
-      </div>
-
-      {pairs.length > 0 ? (
-        pairs.map(({ gym, coffee }, i) => (
-          <div key={gym.id || i} className="pairing-block">
-
-            {/* Gym Card */}
-            <div className="pairing-gym">
-              <span className="pairing-label">🥋 Gym</span>
-              <PlaceCard place={gym} type="bjj" />
-            </div>
-
-            {/* Distance Bridge */}
-            <div className="pairing-bridge">
-              <div className="bridge-line" />
-              <div className="bridge-badge">
-                {coffee?.distanceFromGym
-                  ? `☕ ${coffee.distanceFromGym} mi away`
-                  : "☕ nearby"}
+        {pairs.length > 0 ? (
+          pairs.map(({ gym, coffee }, i) => (
+            <div key={gym.id || i} className="pairing-block">
+              <div className="pairing-gym">
+                <span className="pairing-label">🥋 Gym</span>
+                <PlaceCard place={gym} type="bjj" />
               </div>
-              <div className="bridge-line" />
+              <div className="pairing-bridge">
+                <div className="bridge-line" />
+                <div className="bridge-badge">
+                  {coffee?.distanceFromGym
+                    ? `☕ ${coffee.distanceFromGym} mi away`
+                    : "☕ nearby"}
+                </div>
+                <div className="bridge-line" />
+              </div>
+              <div className="pairing-coffee">
+                <span className="pairing-label">☕ Closest Coffee</span>
+                {coffee
+                  ? <PlaceCard place={coffee} type="coffee" />
+                  : <p className="no-results">No nearby coffee found.</p>
+                }
+              </div>
             </div>
-
-            {/* Closest Coffee Card */}
-            <div className="pairing-coffee">
-              <span className="pairing-label">☕ Closest Coffee</span>
-              {coffee
-                ? <PlaceCard place={coffee} type="coffee" />
-                : <p className="no-results">No nearby coffee found.</p>
-              }
-            </div>
-
-          </div>
-        ))
-      ) : (
-        <p className="no-results">No BJJ schools found nearby.</p>
-      )}
-    </div>
-
-    {/* Standalone columns as backup */}
-    <div className="local-places-columns">
-      <div className="places-column">
-        <h3 className="places-heading">🥋 All BJJ Schools</h3>
-        {bjjSchools.length > 0 ? (
-          bjjSchools.map((place) => (
-            <PlaceCard key={place.id} place={place} type="bjj" />
           ))
         ) : (
           <p className="no-results">No BJJ schools found nearby.</p>
         )}
       </div>
 
-      <div className="places-column">
-        <h3 className="places-heading">☕ All Coffee Shops</h3>
-        {coffeeShops.length > 0 ? (
-          coffeeShops.map((place) => (
-            <PlaceCard key={place.id} place={place} type="coffee" />
-          ))
-        ) : (
-          <p className="no-results">No coffee shops found nearby.</p>
-        )}
-      </div>
-    </div>
+      <div className="local-places-columns">
+        <div className="places-column">
+          <h3 className="places-heading">🥋 All BJJ Schools</h3>
+          {bjjSchools.length > 0 ? (
+            bjjSchools.map((place) => (
+              <PlaceCard key={place.id} place={place} type="bjj" />
+            ))
+          ) : (
+            <p className="no-results">No BJJ schools found nearby.</p>
+          )}
+        </div>
 
-  </motion.div>
+        <div className="places-column">
+          <h3 className="places-heading">☕ All Coffee Shops</h3>
+          {coffeeShops.length > 0 ? (
+            coffeeShops.map((place) => (
+              <PlaceCard key={place.id} place={place} type="coffee" />
+            ))
+          ) : (
+            <p className="no-results">No coffee shops found nearby.</p>
+          )}
+        </div>
+      </div>
+
+    </motion.div>
   );
 }
 
