@@ -10,8 +10,6 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "API key not configured on server" });
   }
 
-  console.log(`Places request: ${query} at ${ll}`);
-
   const [lat, lng] = ll.split(',').map(Number);
 
   try {
@@ -20,7 +18,7 @@ export default async function handler(req, res) {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": process.env.GOOGLE_PLACES_API_KEY,
-        "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.businessStatus"
+        "X-Goog-FieldMask": "places.id,places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.businessStatus"
       },
       body: JSON.stringify({
         textQuery: query,
@@ -38,10 +36,10 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       console.error("Google API Error:", response.status, responseText);
-      return res.status(response.status).json({ 
-        error: "Google Places failed", 
+      return res.status(response.status).json({
+        error: "Google Places failed",
         status: response.status,
-        details: responseText 
+        details: responseText
       });
     }
 
